@@ -19,8 +19,8 @@ PATCHVERSION="1"
 export CC="${PROJECTROOT}/clang-ldid"
 export AR=llvm-ar
 
-export CFLAGS="-isysroot /usr/share/SDKs/iPhoneOS.sdk -miphoneos-version-min=7.0 -arch ${ARCH} -I/usr/local/include"
-export LDFLAGS="-isysroot /usr/share/SDKs/iPhoneOS.sdk -miphoneos-version-min=7.0 -arch ${ARCH} -L/usr/local/lib"
+export CFLAGS="-isysroot /usr/share/SDKs/iPhoneOS.sdk -miphoneos-version-min=7.0 -arch ${ARCH} -I/usr/local/include -I/usr/include"
+export LDFLAGS="-isysroot /usr/share/SDKs/iPhoneOS.sdk -miphoneos-version-min=7.0 -arch ${ARCH} -L/usr/local/lib -L/usr/lib"
 
 download() {
   if [ ! -r "${PROJECTROOT}/Python-${VERSION}.tar.xz" ]; then
@@ -59,6 +59,7 @@ build() {
     --prefix=/usr \
     --enable-shared \
     --disable-static \
+    --enable-optimizations \
     --enable-loadable-sqlite-extensions \
     --with-signal-module \
     --enable-big-digits \
@@ -68,6 +69,7 @@ build() {
     --with-system-expat \
     --with-system-ffi \
     --without-ensurepip \
+    --with-dtrace \
     --with-dbmloader=gdbm \
     ac_cv_func_sendfile=no \
     ac_cv_file__dev_ptmx=no \
@@ -82,9 +84,30 @@ bundle() {
   rm -rf "${destdir}"
   mkdir -p "${destdir}"
 
+  local sharedir="${destdir}/usr/share"
+  local bindir="${destdir}/usr/bin"
+  local libdir="${destdir}/usr/lib/python${VERSION}"
+  local mandir="${sharedir}/man/man1"
+  local licensedir="${sharedir}/licenses/python"
+
   cd "${BUILDPYROOT}"
 
   make -j3 install DESTDIR="${destdir}"
+
+  ln -s idle3 "${bindir}/idle"
+  ln -s pydoc3 "${bindir}/pydoc"
+  ln -s python3 "${bindir}/python"
+  ln -s python3-config "${bindir}/python-config"
+
+  ln -s libpython "${libdir}/doc"
+
+  unlink "${mandir}/python3.1"
+  gzip "${mandir}/python3.8.1"
+  ln -s python3.8.1.gz "${mandir}/python3.1.gz"
+  ln -s python3.8.1.gz "${mandir}/python.1.gz"
+
+  mkdir -p "${licensedir}"
+  cp -R LICENSE "${licensedir}"
 
   cd "${PROJECTROOT}"
 }
