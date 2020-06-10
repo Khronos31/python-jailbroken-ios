@@ -99,8 +99,6 @@ bundle() {
   ln -s python3 "${bindir}/python"
   ln -s python3-config "${bindir}/python-config"
 
-  ln -s libpython "${libdir}/doc"
-
   unlink "${mandir}/python3.1"
   gzip "${mandir}/python3.8.1"
   ln -s python3.8.1.gz "${mandir}/python3.1.gz"
