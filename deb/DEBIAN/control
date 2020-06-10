@@ -1,0 +1,13 @@
+Package: com.khronos.python
+Priority: optional
+Name: Python
+Version: %%VERSION%%
+Section: Scripting
+Architecture: iphoneos-arm
+Depends: com.khronos.bzip2, com.khronos.libressl, com.khronos.expat, com.khronos.gdbm, com.khronos.libffi, com.khronos.xz, com.khronos.ncurses, com.khronos.readline, com.khronos.sqlite3, com.khronos.zlib
+Pre-Depends: dpkg
+Maintainer: Khronos
+Homepage: https://www.python.org
+Tag: purpose::console
+Description: Compiled for %%ARCHS%%.
+	Python is a programming language that lets you work quickly and integrate systems more effectively.

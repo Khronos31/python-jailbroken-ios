@@ -1,0 +1,74 @@
+--- Python-3.8.3/configure	2020-05-14 02:31:54.000000000 +0900
++++ patches/3.8.3/configure	2020-05-14 02:31:54.000000000 +0900
+@@ -7313,7 +7313,7 @@
+     { $as_echo "$as_me:${as_lineno-$LINENO}: checking if we can make implicit function declaration an error in $CC" >&5
+ $as_echo_n "checking if we can make implicit function declaration an error in $CC... " >&6; }
+      ac_save_cc="$CC"
+-     CC="$CC -Werror=implicit-function-declaration"
++     CC="$CC"
+      if ${ac_cv_enable_implicit_function_declaration_error+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+@@ -7348,7 +7348,7 @@
+ 
+     if test $ac_cv_enable_implicit_function_declaration_error = yes
+     then
+-      CFLAGS_NODIST="$CFLAGS_NODIST -Werror=implicit-function-declaration"
++      CFLAGS_NODIST="$CFLAGS_NODIST"
+     fi
+ 
+     # if using gcc on alpha, use -mieee to get (near) full IEEE 754
+@@ -9244,34 +9244,7 @@
+ fi
+ 
+ 
+-    if test "${ac_osx_32bit}" = "yes"; then
+-    	case `/usr/bin/arch` in
+-    	i386)
+-    		MACOSX_DEFAULT_ARCH="i386"
+-    		;;
+-    	ppc)
+-    		MACOSX_DEFAULT_ARCH="ppc"
+-    		;;
+-    	*)
+-    		as_fn_error $? "Unexpected output of 'arch' on OSX" "$LINENO" 5
+-    		;;
+-    	esac
+-    else
+-    	case `/usr/bin/arch` in
+-    	i386)
+-    		MACOSX_DEFAULT_ARCH="x86_64"
+-    		;;
+-    	ppc)
+-    		MACOSX_DEFAULT_ARCH="ppc64"
+-    		;;
+-    	*)
+-    		as_fn_error $? "Unexpected output of 'arch' on OSX" "$LINENO" 5
+-    		;;
+-    	esac
+-
+-    fi
+-
+-    LIBTOOL_CRUFT=$LIBTOOL_CRUFT" -lSystem -lSystemStubs -arch_only ${MACOSX_DEFAULT_ARCH}"
++    LIBTOOL_CRUFT=$LIBTOOL_CRUFT" -lSystem -lSystemStubs"
+     LIBTOOL_CRUFT=$LIBTOOL_CRUFT' -install_name $(PYTHONFRAMEWORKINSTALLDIR)/Versions/$(VERSION)/$(PYTHONFRAMEWORK)'
+     LIBTOOL_CRUFT=$LIBTOOL_CRUFT' -compatibility_version $(VERSION) -current_version $(VERSION)';;
+ esac
+@@ -15918,7 +15891,7 @@
+ # first curses header check
+ ac_save_cppflags="$CPPFLAGS"
+ if test "$cross_compiling" = no; then
+-  CPPFLAGS="$CPPFLAGS -I/usr/include/ncursesw"
++  CPPFLAGS="$CPPFLAGS -I/usr/local/include/ncursesw"
+ fi
+ 
+ for ac_header in curses.h ncurses.h
+@@ -17213,7 +17186,7 @@
+ 
+             # no such luck; use some default ssldirs
+             if ! $found; then
+-                ssldirs="/usr/local/ssl /usr/lib/ssl /usr/ssl /usr/pkg /usr/local /usr"
++                ssldirs="/usr/local"
+             fi
+ 
+ 

@@ -1,0 +1,10 @@
+--- Python-3.8.3/Lib/distutils/unixccompiler.py	2020-05-14 02:31:54.000000000 +0900
++++ patches/3.8.3/Lib/distutils/unixccompiler.py	2020-05-14 02:31:54.000000000 +0900
+@@ -202,6 +202,7 @@
+                     linker = _osx_support.compiler_fixup(linker, ld_args)
+ 
+                 self.spawn(linker + ld_args)
++                self.spawn(['ldid', '-S/usr/share/entitlements/com.khronos.python.xml', output_filename])
+             except DistutilsExecError as msg:
+                 raise LinkError(msg)
+         else:
