@@ -16,8 +16,7 @@ fi
 VERSION="3.8.3"
 PATCHVERSION="1"
 
-export CC=clang
-export CXX=clang++
+export CC="${PROJECTROOT}/clang-ldid"
 export AR=llvm-ar
 
 export CFLAGS="-isysroot /usr/share/SDKs/iPhoneOS.sdk -miphoneos-version-min=7.0 -arch ${ARCH} -I/usr/local/include"
